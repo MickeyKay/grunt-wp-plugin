@@ -20,18 +20,37 @@ exports.after = '';
 // Any existing file or directory matching this wildcard will cause a warning.
 exports.warnOn = '*';
 
+// Set default slug to current directory name
+var slug = process.cwd().substring(process.cwd().lastIndexOf('/')+1)
+
+// Set default plugin title
+var title = slug.replace(/-/gi,' ').replace(/\w\S*/gi, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+
+// Set default function prefix
+var prefix = '';
+slug.split('-').forEach(function(element) {
+	prefix += element.substring(0,1);
+});
+
 // The actual init template
 exports.template = function( grunt, init, done ) {
 	init.process( {}, [
 		// Prompt for these values.
-		init.prompt( 'title', 'WP Plugin' ),
+		init.prompt( 'title', title ),
+		{
+			name   : 'slug',
+			message: 'Plugin slug (used for text domain)',
+			default: slug
+		},
 		{
 			name   : 'prefix',
 			message: 'PHP function prefix (alpha and underscore characters only)',
-			default: 'wpplugin'
+			default: prefix
 		},
 		init.prompt( 'description', 'The best WordPress extension ever made!' ),
-		init.prompt( 'homepage', 'http://wordpress.org/plugins' ),
+		init.prompt( 'homepage', 'http://wordpress.org/plugins/' + slug ),
+		
+		// Check ~/.grunt-init/defaults.json for global/system defaults
 		init.prompt( 'author_name' ),
 		init.prompt( 'author_email' ),
 		init.prompt( 'author_url' ),
@@ -57,13 +76,19 @@ exports.template = function( grunt, init, done ) {
 		};
 		
 		// Sanitize names where we need to for PHP/JS
-		props.name = props.title.replace( /\s+/g, '-' ).toLowerCase();
+		//props.name = props.title.replace( /\s+/g, '-' ).toLowerCase();
+		props.name = slug;
+		
 		// Development prefix (i.e. to prefix PHP function names, variables)
 		props.prefix = props.prefix.replace('/[^a-z_]/i', '').toLowerCase();
+		
 		// Development prefix in all caps (e.g. for constants)
 		props.prefix_caps = props.prefix.toUpperCase();
+		
 		// An additional value, safe to use as a JavaScript identifier.
-		props.js_safe_name = props.name.replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
+		//props.js_safe_name = props.name.replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
+		props.js_safe_name = slug;
+		
 		// An additional value that won't conflict with NodeUnit unit tests.
 		props.js_test_safe_name = props.js_safe_name === 'test' ? 'myTest' : props.js_safe_name;
 		props.js_safe_name_caps = props.js_safe_name.toUpperCase();
