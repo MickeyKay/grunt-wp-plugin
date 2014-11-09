@@ -63,16 +63,20 @@ exports.template = function( grunt, init, done ) {
 		props.keywords = [];
 		props.version = '0.1.0';
 		props.devDependencies = {
-			'grunt': '~0.4.1',
-			'grunt-contrib-concat':   '~0.1.2',
-			'grunt-contrib-uglify':   '~0.1.1',
-			'grunt-contrib-cssmin':   '~0.6.0',
-			'grunt-contrib-jshint':   '~0.1.1',
-			'grunt-contrib-nodeunit': '~0.1.2',
-			'grunt-contrib-watch':    '~0.2.0',
-			'grunt-contrib-clean':    '~0.5.0',
-			'grunt-contrib-copy':     '~0.4.1',
-			'grunt-contrib-compress': '~0.5.2'
+			'grunt':                  'latest',
+			'grunt-contrib-concat':   'latest',
+			'grunt-contrib-uglify':   'latest',
+			'grunt-contrib-cssmin':   'latest',
+			'grunt-contrib-jshint':   'latest',
+			'grunt-contrib-nodeunit': 'latest',
+			'grunt-contrib-watch':    'latest',
+			'grunt-contrib-clean':    'latest',
+			'grunt-contrib-copy':     'latest',
+			'grunt-csscomb':          'latest',
+			'grunt-contrib-compress': 'latest',
+			'grunt-dev-update':       'latest',
+			'grunt-wp-i18n':          'latest',
+			'load-grunt-tasks':       'latest'
 		};
 		
 		// Sanitize names where we need to for PHP/JS
@@ -101,7 +105,7 @@ exports.template = function( grunt, init, done ) {
 				delete files[ 'assets/css/sass/' + props.js_safe_name + '.scss'];
 				delete files[ 'assets/css/src/' + props.js_safe_name + '.css' ];
 				
-				props.devDependencies["grunt-contrib-less"] = "~0.5.0";
+				props.devDependencies["grunt-contrib-less"] = "latest";
 				props.css_type = 'less';
 				break;
 			case 'n':
@@ -116,7 +120,7 @@ exports.template = function( grunt, init, done ) {
 				delete files[ 'assets/css/less/' + props.js_safe_name + '.less'];
 				delete files[ 'assets/css/src/' + props.js_safe_name + '.css' ];
 				
-				props.devDependencies["grunt-contrib-sass"] = "~0.2.2";
+				props.devDependencies["grunt-contrib-sass"] = "latest";
 				props.css_type = 'sass';
 				break;
 		}

@@ -1,8 +1,22 @@
+/*jslint node: true */
+"use strict";
+
 module.exports = function( grunt ) {
+
+	// Load all tasks.
+	require('load-grunt-tasks')(grunt, {scope: 'devDependencies'});
 
 	// Project configuration
 	grunt.initConfig( {
 		pkg:    grunt.file.readJSON( 'package.json' ),
+		devUpdate: {
+	        main: {
+	            options: {
+	                updateType: 'force',
+	                semver: false,
+	            }
+	        }
+	    },
 		concat: {
 			options: {
 				stripBanners: true,
@@ -12,7 +26,7 @@ module.exports = function( grunt ) {
 					' * Licensed GPLv2+' +
 					' */\n'
 			},
-			{%= js_safe_name %}: {
+			dist: {
 				src: [
 					'assets/js/src/{%= js_safe_name %}.js'
 				],
@@ -171,31 +185,39 @@ module.exports = function( grunt ) {
 		}
 	} );
 	
-	// Load other tasks
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-concat');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-cssmin');
-	{% if ('sass' === css_type) { %}
-	grunt.loadNpmTasks('grunt-contrib-sass');
-	{% } else if ('less' === css_type) { %}
-	grunt.loadNpmTasks('grunt-contrib-less');
-	{% } %}
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks( 'grunt-contrib-clean' );
-	grunt.loadNpmTasks( 'grunt-contrib-copy' );
-	grunt.loadNpmTasks( 'grunt-contrib-compress' );
-	
 	// Default task.
 	{% if ('sass' === css_type) { %}
-	grunt.registerTask( 'default', ['jshint', 'concat', 'uglify', 'sass', 'cssmin'] );
+	grunt.registerTask( 'default', [
+		'jshint',
+		'concat',
+		'uglify',
+		'sass',
+		'cssmin'
+	] );
 	{% } else if ('less' === css_type) { %}
-	grunt.registerTask( 'default', ['jshint', 'concat', 'uglify', 'less', 'cssmin'] );
+	grunt.registerTask( 'default', [
+		'jshint',
+		'concat',
+		'uglify',
+		'less',
+		'cssmin'
+	] );
 	{% } else { %}
-	grunt.registerTask( 'default', ['jshint', 'concat', 'uglify', 'cssmin'] );
+	grunt.registerTask( 'default', [
+		'jshint',
+		'concat',
+		'uglify',
+		'cssmin'
+	] );
 	{% } %}
 	
-	grunt.registerTask( 'build', ['default', 'clean', 'copy', 'compress'] );
+	grunt.registerTask( 'build', [
+		'default',
+		'devUpdate',
+		'clean',
+		'copy',
+		'compress'
+	] );
 
 	grunt.util.linefeed = '\n';
 };
