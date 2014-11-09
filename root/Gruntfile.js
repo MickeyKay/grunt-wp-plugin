@@ -212,8 +212,8 @@ module.exports = function( grunt ) {
 	{% } %}
 	
 	grunt.registerTask( 'build', [
-		'default',
 		'devUpdate',
+		'default',
 		'clean',
 		'copy',
 		'compress'
