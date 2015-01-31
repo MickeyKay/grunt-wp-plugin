@@ -47,8 +47,26 @@ exports.template = function( grunt, init, done ) {
 			message: 'PHP function prefix (alpha and underscore characters only)',
 			default: prefix
 		},
-		init.prompt( 'description', 'The best WordPress extension ever made!' ),
-		init.prompt( 'homepage', 'http://wordpress.org/plugins/' + slug ),
+		{
+			name   : 'version',
+			message: 'Version',
+			default: '1.0.0'
+		},
+		{
+			name   : 'description',
+			message: 'Description',
+			default: 'The best WordPress extension ever made!'
+		},
+		{
+			name   : 'tags',
+			message: 'Tags',
+			default: 'e.g. custom, post, type'
+		},
+		{
+			name   : 'homepage',
+			message: 'Homepage',
+			default: 'http://wordpress.org/plugins/' + slug
+		},
 		
 		// Check ~/.grunt-init/defaults.json for global/system defaults
 		init.prompt( 'author_name' ),
@@ -61,7 +79,6 @@ exports.template = function( grunt, init, done ) {
 		}
 	], function( err, props ) {
 		props.keywords = [];
-		props.version = '0.1.0';
 		props.devDependencies = {
 			'grunt':                  'latest',
 			'grunt-contrib-concat':   'latest',

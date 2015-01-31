@@ -1,10 +1,10 @@
 === {%= title %} ===
-Contributors:      10up
+Contributors:      McGuive7
 Donate link:       {%= homepage %}
-Tags: 
-Requires at least: 3.9
-Tested up to:      3.9
-Stable tag:        0.1.0
+Tags:              {%= tags %}
+Requires at least: 3.5
+Tested up to:      4.1
+Stable tag:        {%= version %}
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,10 +29,10 @@ License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
 == Changelog ==
 
-= 0.1.0 =
+= {%= version %} =
 * First release
 
 == Upgrade Notice ==
 
-= 0.1.0 =
+= {%= version %} =
 First Release

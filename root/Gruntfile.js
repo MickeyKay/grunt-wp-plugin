@@ -148,6 +148,16 @@ module.exports = function( grunt ) {
 				}
 			}
 		},
+		// https://www.npmjs.org/package/grunt-wp-i18n
+	    makepot: {
+	        target: {
+	            options: {
+	                domainPath: '/languages/',    // Where to save the POT file.
+	                potFilename: '{%= js_safe_name %}.pot',   // Name of the POT file.
+	                type: 'wp-plugin'  // Type of project (wp-plugin or wp-theme).
+	            }
+	        }
+	    },
 		clean: {
 			main: ['release/<%= pkg.version %>']
 		},
@@ -192,7 +202,8 @@ module.exports = function( grunt ) {
 		'concat',
 		'uglify',
 		'sass',
-		'cssmin'
+		'cssmin',
+		'makepot'
 	] );
 	{% } else if ('less' === css_type) { %}
 	grunt.registerTask( 'default', [
@@ -200,20 +211,23 @@ module.exports = function( grunt ) {
 		'concat',
 		'uglify',
 		'less',
-		'cssmin'
+		'cssmin',
+		'makepot'
 	] );
 	{% } else { %}
 	grunt.registerTask( 'default', [
 		'jshint',
 		'concat',
 		'uglify',
-		'cssmin'
+		'cssmin',
+		'makepot'
 	] );
 	{% } %}
 	
 	grunt.registerTask( 'build', [
 		'devUpdate',
 		'default',
+		'makepot',
 		'clean',
 		'copy',
 		'compress'
